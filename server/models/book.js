@@ -9,8 +9,8 @@ const bookSchema = mongoose.Schema(
         },
         bookID :
         {
-            type : String,
-            required : true,
+            type: mongoose.SchemaTypes.ObjectId,
+            required: true
         },
         author :
         {
