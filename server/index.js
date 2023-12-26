@@ -2,13 +2,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { port , mongoDBURL } from './config.js';
-
+import dotenv from 'dotenv';
 import bookRoutes from './routes/books.js';
 
 
 
-const app = express()
+const app = express();
+dotenv.config();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -21,20 +21,13 @@ app.get('/' , (req,res) => {
     return res.status(234).send('Welcome to the Project')
 })
 
-// create a new book
-
-// get all books
-
-// get book by ID
-
-// update book by ID
-
+const PORT = process.env.PORT;
 
 mongoose
-    .connect(mongoDBURL , { useNewUrlParser: true, useUnifiedTopology: true})
+    .connect(process.env.CONNECTION_URL , { useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
-        app.listen( port , () => {
-            console.log(`Server running on port : ${port}`)
+        app.listen( PORT , () => {
+            console.log(`Server running on port : ${PORT}`)
         });
     })
     .catch((error) => {

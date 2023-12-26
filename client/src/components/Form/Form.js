@@ -35,7 +35,7 @@ const Form = ({currentId,setcurrentId}) => {
             <TextField name="creator" variant="outlined" label="Creator" fullWidth value={bookData.creator} onChange={(e) => setbookData({ ...bookData,creator:e.target.value})}/>
             <TextField name="title" variant="outlined" label="Title" fullWidth value={bookData.title} onChange={(e) => setbookData({ ...bookData,title:e.target.value})}/>
             <TextField name="description" variant="outlined" label="Description" fullWidth value={bookData.description} onChange={(e) => setbookData({ ...bookData,description:e.target.value})}/>
-            <TextField name="tags" variant="outlined" label="Tags" fullWidth value={bookData.tags} onChange={(e) => setbookData({ ...bookData,tags:e.target.value})}/>
+            <TextField name="tags" variant="outlined" label="Tags" fullWidth value={bookData.tags} onChange={(e) => setbookData({ ...bookData,tags:e.target.value.split(',')})}/>
             <FormControl margin='dense'  >
                 <FormLabel id="availability-status" className={`${classes.root} ${classes.form} `}>Available for issue : </FormLabel>
                     <RadioGroup

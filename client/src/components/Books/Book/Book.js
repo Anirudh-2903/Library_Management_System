@@ -30,8 +30,8 @@ const Book = ({ book , setcurrentId }) => {
             <CardContent>
              <Typography variant="body2" color="textSecondary" component="p">{book.description}</Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
-            <Button color ="primary" size="small" onClick={() => dispatch(deleteBook(book._id))}><DeleteIcon fontSize="small"  /> Delete</Button>
+            <CardActions className={classes.cardActions} >
+            <Button color ="primary" size="small" onClick={() => dispatch(deleteBook(book._id))} ><DeleteIcon fontSize="small"  /> Delete</Button>
             <Typography variant="body2" color="black" component="p" paddingRight={2}>Available : {book.available}</Typography>
             </CardActions>
         </Card>
