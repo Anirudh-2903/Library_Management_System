@@ -7,25 +7,39 @@ const bookSchema = mongoose.Schema(
             type : String,
             required : true,
         },
-        bookID :
+        description :
         {
-            type: mongoose.SchemaTypes.ObjectId,
+            type: String,
             required: true
         },
-        author :
+        creator :
         {
             type : String,
             required : true,
         },
-        published :
+        tags :
+        {
+            type : [String],
+            required : true,
+        },
+        selectedFile :
         {
             type : String,
             required : true,
         },
-    },
-    {
-        timestamps : true,
+        createdAt :
+        {
+            type : Date,
+            default : new Date()
+        },
+        available :
+        {
+            type : String,
+            required : true,
+        },
     }
 );
 
-export const Book = mongoose.model('Book1',bookSchema);
+const Book = mongoose.model('Book',bookSchema);
+
+export default Book;
