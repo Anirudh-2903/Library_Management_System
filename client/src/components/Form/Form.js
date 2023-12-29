@@ -29,14 +29,14 @@ const Form = ({currentId,setcurrentId}) => {
         setbookData({ creator: '', title: '', description: '', tags: '', selectedFile: '',available: '' });
     }
     return (
-        <Paper className={classes.paper}>
+        <Paper sx={{ margin: 1 , padding: 2}} className={classes.paper}>
         <form autoComplete="off" noValidate className={`${classes.root} ${classes.form} `} onSubmit={handleSubmit}>
-            <Typography variant="h6">{currentId ? 'Editing the ' : 'Adding a '} Book</Typography>
-            <TextField name="creator" variant="outlined" label="Creator" fullWidth value={bookData.creator} onChange={(e) => setbookData({ ...bookData,creator:e.target.value})}/>
-            <TextField name="title" variant="outlined" label="Title" fullWidth value={bookData.title} onChange={(e) => setbookData({ ...bookData,title:e.target.value})}/>
-            <TextField name="description" variant="outlined" label="Description" fullWidth value={bookData.description} onChange={(e) => setbookData({ ...bookData,description:e.target.value})}/>
-            <TextField name="tags" variant="outlined" label="Tags" fullWidth value={bookData.tags} onChange={(e) => setbookData({ ...bookData,tags:e.target.value.split(',')})}/>
-            <FormControl margin='dense'  >
+            <Typography sx={{ margin: 0.5 }} variant="h6">{currentId ? 'Editing the ' : 'Adding a '} Book</Typography>
+            <TextField sx={{ margin: 0.5 }} name="creator" variant="outlined" label="Creator" fullWidth value={bookData.creator} onChange={(e) => setbookData({ ...bookData,creator:e.target.value})}/>
+            <TextField sx={{ margin: 0.5 }} name="title" variant="outlined" label="Title" fullWidth value={bookData.title} onChange={(e) => setbookData({ ...bookData,title:e.target.value})}/>
+            <TextField sx={{ margin: 0.5 }} name="description" variant="outlined" label="Description" fullWidth value={bookData.description} onChange={(e) => setbookData({ ...bookData,description:e.target.value})}/>
+            <TextField sx={{ margin: 0.5 }} name="tags" variant="outlined" label="Tags" fullWidth value={bookData.tags} onChange={(e) => setbookData({ ...bookData,tags:e.target.value.split(',')})}/>
+            <FormControl sx={{ margin: 0.5 }} margin='dense'  >
                 <FormLabel id="availability-status" className={`${classes.root} ${classes.form} `}>Available for issue : </FormLabel>
                     <RadioGroup
                         row
@@ -48,8 +48,8 @@ const Form = ({currentId,setcurrentId}) => {
                 <FormControlLabel value="No" control={<Radio />} label="No" />
                 </RadioGroup>
                 </FormControl>
-            <div className={classes.fileInput}><FileBase type="file" multiple={false} onDone={({base64}) => setbookData({ ...bookData,selectedFile: base64})}/></div>
-            <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+            <div  className={classes.fileInput}><FileBase type="file" multiple={false} onDone={({base64}) => setbookData({ ...bookData,selectedFile: base64})}/></div>
+            <Button sx={{ marginBottom: 1}}  variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
             <Button  variant="contained" color="secondary" size="medium" onClick={clear} fullWidth>Clear</Button>
         </form>
         </Paper>

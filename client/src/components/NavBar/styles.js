@@ -24,7 +24,7 @@ export default makeStyles(() => ({
       },
       profile: {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         width: '400px',
       },
       userName: {
