@@ -33,7 +33,7 @@ export const updateBook = async (req,res) => {
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No Book with that id');
 
     const updatedBook = await Book.findByIdAndUpdate(_id,{...book,_id},{new : true});
-    res.json(updateBook);
+    res.json(updatedBook);
 
 }
 
