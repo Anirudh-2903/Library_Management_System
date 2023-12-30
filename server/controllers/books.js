@@ -6,18 +6,45 @@ const router = express.Router();
 
 
 export const getBooks = async (req,res) => {
+    const { page } = req.query;
     try {
-        const books =  await Book.find({});
-        return res.status(200).json(books);
+        const LIMIT = 8;
+        const startIndex = (Number(page)-1)* LIMIT;
+        const total = await Book.countDocuments({});
+        const books =  await Book.find().sort({ _id: -1}).limit(LIMIT).skip(startIndex);
+        return res.status(200).json({data : books , currentPage: Number(page) , numberOfPages: Math.ceil(total/LIMIT)});
     } catch (error) {
         return res.status(500).send({message : error.message});
     }
 };
 
+export const getBook = async (req,res) => {
+    const { id } = req.params;
+    try{
+        const book = await Book.findById(id);
+        return res.status(200).json(book);
+    } catch(error){
+        return res.status(404).send({message : error.message});
+    }
+};
+
+
+export const getBooksBySearch = async (req, res) => {
+    const { searchQuery , tags } = req.query;
+
+    try {
+        const title = new RegExp(searchQuery , "i");
+        const books = await Book.find({ $or : [{title},{tags: { $in: tags.split(',')}}]})
+        res.status(200).json({data : books});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
 export const createBook = async (req,res) => {
 
-    const { title, description , selectedFile, creator, tags , available } = req.body;
-    const newBook = new Book({ title, description, selectedFile, creator, tags ,available})
+    const post = req.body;
+    const newBook = new Book({ ...post , creator : req.userId , createdAt : new Date().toISOString()})
     try {
         await newBook.save();
         return res.status(201).json(newBook);

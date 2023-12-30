@@ -2,39 +2,40 @@ import React,{useState} from 'react'
 import { Typography,Paper,Avatar,Grid,Container,Button } from '@mui/material';
 import LockOutlined from '@mui/icons-material/LockOutlined';
 
-import {useGoogleLogin} from '@react-oauth/google';
+import {GoogleLogin} from '@react-oauth/google';
 import {useDispatch} from 'react-redux';
-
+import {jwtDecode} from 'jwt-decode';
 
 
 import useStyles from './styles';
 import Input from './Input';
-import Icon from './icon';
-import axios from 'axios';
 import { AUTH } from '../../constants/actionTypes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation } from 'react-router-dom';
 import {signin,signup} from '../../actions/auth';
 
-const initState = {firstName : '',lastName : '',email : '',password : '',confirmPassword : ''};
 
 const Auth = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    var isAdmin= location.state;
+    if(isAdmin === null){isAdmin = false;}
+    const initState = {firstName : '',lastName : '',email : '',password : '',confirmPassword : '',isAdmin: isAdmin};
 
 
     const [ShowPassword, setShowPassword] = useState(false);
     const [isSignUp, setisSignUp] = useState(false);
     const [formData, setFormData] = useState(initState);
     const handleShowPassword = () =>  setShowPassword((prevShowPassword) => !prevShowPassword);
-    const switchMode = () =>  {setisSignUp((previsSignUp) => !previsSignUp);  handleShowPassword();};
+    const switchMode = () =>  {setFormData(initState);setisSignUp((previsSignUp) => !previsSignUp);  setShowPassword(false);};
 
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         if(isSignUp) {
             dispatch(signup(formData,navigate));
         } else {
@@ -47,30 +48,23 @@ const Auth = () => {
     };
 
 
-    const login = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            const token = tokenResponse?.access_token;
-          // fetching userinfo can be done on the client or the server
-          const userInfo = await axios
-            .get('https://www.googleapis.com/oauth2/v3/userinfo',
-              { headers: { Authorization: `Bearer ${tokenResponse.access_token}` }});
-          const result = userInfo?.data;
-         // contains name, email & googleId(sub)
-         try {
-            dispatch({ type: AUTH ,data: { result, token }});
-            navigate("/");
+    const googleSuccess = async (res) => {
+
+        const token = res?.credential;
+        const result = jwtDecode(token);
+        try {
+          dispatch({ type: AUTH, data: { result, token } });
+          navigate("/");
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
-        },
-        });
+      };
 
 
 
 
     const googleError = () => {
-        console.log(console.error);
-        console.log('Google Sign In was unsuccesful. Try again later.');
+        alert('Google Sign In was unsuccesful. Try again later.');
     };
 
 
@@ -80,7 +74,7 @@ const Auth = () => {
             <Avatar className={classes.avatar} sx={{ bgcolor: '#5AC8FA' , marginTop: 1}}>
                 <LockOutlined />
             </Avatar>
-            <Typography sx={{ margin: 1}} variant="h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
+            <Typography sx={{ margin: 1}} variant="h5">{isAdmin ? isSignUp ? 'Admin Sign Up' : 'Admin Sign In' : isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
             <form  className={classes.form} onSubmit={handleSubmit}>
                 <Grid sx={{ marginTop: 1 , marginBottom: 2}} container spacing={2}>
                     {
@@ -96,7 +90,13 @@ const Auth = () => {
                     {   isSignUp && <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type="password" />}
                 </Grid>
                 <Button sx={{ marginTop: 1 ,marginBottom: 2}} className={classes.submit} variant="contained" color="primary"  type="submit" fullWidth>{isSignUp ? 'Sign Up' : 'Sign In'}</Button>
-                <Button  color="primary" variant="contained" fullWidth onClick={login} startIcon={<Icon  />} >Google Sign In</Button>
+                <GoogleLogin
+                clientId="473031617486-dqhs62ch8hjdkt9nsg7i34894q439dps.apps.googleusercontent.com"
+                render={(renderProps) => (
+                <Button className={classes.googleButton}    variant="contained">
+                Google Sign In
+                </Button>
+                )} onSuccess={googleSuccess} onFailure={googleError}/>
                 <Grid sx={{ marginTop: 3 ,marginX: -1}} container  justify="flex-end">
                     <Grid  item>
                         <Button onClick={switchMode} fullWidth>{ isSignUp ? 'Already have an account ? Sign In' : "Don't have an account ? Sign Up"}</Button>
@@ -109,3 +109,5 @@ const Auth = () => {
 }
 
 export default Auth;
+
+

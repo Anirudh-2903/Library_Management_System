@@ -27,6 +27,12 @@ export default makeStyles(() => ({
         justifyContent: 'space-evenly',
         width: '400px',
       },
+      profile2: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin:'10px',
+        width: '250px',
+      },
       userName: {
         display: 'flex',
         alignItems: 'center',

@@ -5,14 +5,15 @@ import {Grid , CircularProgress} from '@mui/material';
 import useStyles from './styles';
 
 const Books = ({setcurrentId}) => {
-    const books = useSelector((state) => state.books);
+    const {books , isLoading } = useSelector((state) => state.books);
     const classes = useStyles();
+    if(!books?.length && !isLoading) return 'No Books Found.';
 
     return (
-        !books.length ? <CircularProgress /> : (
+        isLoading ? <CircularProgress  /> : (
             <Grid className={classes.mainContainer} container alignItems="stretch" spacing={3}>
-                { books.map((book) => (
-                    <Grid key={book._id} item xs={12} sm={6}>
+                { books?.map((book) => (
+                    <Grid key={book._id} item xs={12} sm={12} md={6} lg={3}>
                         <Book book ={book} setcurrentId={setcurrentId} />
                     </Grid>
                 ))}

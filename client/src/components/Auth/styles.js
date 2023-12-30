@@ -10,4 +10,7 @@ export default makeStyles(() => ({
   form: {
     width: '100%', // Fix IE 11 issue.
   },
+  googleButton: {
+    justifyContent: 'center',
+  },
 }));

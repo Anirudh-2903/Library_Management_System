@@ -12,6 +12,11 @@ const bookSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        addedBy : {type : String,},
+        author :
+        {
+            type : String,
+        },
         creator :
         {
             type : String,
