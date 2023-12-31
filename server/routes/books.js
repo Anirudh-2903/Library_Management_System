@@ -6,9 +6,8 @@ import {auth} from '../middleware/auth.js';
 
 
 router.get('/', getBooks);
-router.get('/:id', getBook);
 router.get('/search', getBooksBySearch);
-// router.get('/:id', getBook);
+router.get('/:id', getBook);
 
 
 router.post('/',auth , createBook);
