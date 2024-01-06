@@ -1,6 +1,6 @@
 # Library Management Web App
 
-A web app for the management of books, users and the Issue and Return of Books in a library.
+A web app for the management of books, users and the Issue and Return of books in a library.
 
 ## User Permissions
 
@@ -11,7 +11,7 @@ A student can
 * register himself on the app
 * view books
 
-  
+
 ### Admin
 
 An admin can
@@ -27,10 +27,10 @@ An admin can
 
 ### The MERN Stack
 
-* [MongoDB](https://docs.mongodb.com/) - Document database - to store data as JSON 
+* [MongoDB](https://docs.mongodb.com/) - Document database - to store data as JSON
 * [Express.js](https://devdocs.io/express/) - Back-end web application framework running on top of Node.js
 * [React](https://reactjs.org/docs/) - Front-end web app framework used
-* [Node.js](https://nodejs.org/en/docs/) - JavaScript runtime environment 
+* [Node.js](https://nodejs.org/en/docs/) - JavaScript runtime environment
 
 ### Middleware
 
@@ -54,7 +54,7 @@ npm i express body-parser mongoose concurrently
 npm i -D nodemon
 ```
 
-3. Create a file server.js to make use of the express packages 
+3. Create a file server.js to make use of the express packages
 
 4. Modify the package.json by adding the following scripts to it :
 
@@ -80,7 +80,7 @@ npm run server
 
 8. Make Schemas for various collections to be stored in database and export them from a folder models and the REST APIs for various routes in the folder routes. Change the server.js accordingly to make the use of these REST APIs. Ensure that the APIs are working correctly, by making requests using POSTMAN
 
-9. Add JWT token based authentication and 'cors' module and use them in server.js. 
+9. Add JWT token based authentication and 'cors' module and use them in server.js.
 
 ### Setting up the React client
 
@@ -104,7 +104,7 @@ cd ..
 
 ```(bash)
 cd client
-npm i bootstrap reactstrap react-popper font-awesome 
+npm i bootstrap reactstrap react-popper font-awesome
 ```
 
 
@@ -126,7 +126,7 @@ npm i redux react-redux redux-thunk
 if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));
-  
+
     app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
