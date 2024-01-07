@@ -25,15 +25,20 @@ app.get('/' , (req,res) => {
 
 const PORT = process.env.PORT;
 
-mongoose
-    .connect(process.env.CONNECTION_URL)
-    .then(() => {
-        app.listen( PORT , () => {
-            console.log(`Server running on port : ${PORT}`)
-        });
+const connectDB = async () => {
+    try {
+      const conn = await mongoose.connect(process.env.CONNECTION_URL);
+      console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
+  }
+
+  connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
     })
-    .catch((error) => {
-        console.log(error);
-    });
+})
 
 
