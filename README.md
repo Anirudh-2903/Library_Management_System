@@ -8,7 +8,7 @@ A web app for the management of books, users and the Issue and Return of Books i
 
 A student can
 
-* register himself on the app using Google
+* register himself on the app 
 * view books
 
 
