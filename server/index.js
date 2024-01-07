@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use('/books',bookRoutes);
 app.use('/user',userRoutes);
 
-app.get('/' , (req,res) => {
+app.get('/' , async (req,res) => {
     console.log(req)
     return res.status(234).send('Welcome to the Project')
 })
